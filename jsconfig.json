@@ -3,8 +3,8 @@
         "types": ["node", "@wdio/globals/types", "@wdio/cucumber-framework"]
     },
     "include": [
-        "test/features/*.js",
-        "test/features/**/*.js",
+        "features/*.js",
+        "features/**/*.js",
         "**/*.json",
         "@wdio/globals/types",
         "@wdio/cucumber-framework"

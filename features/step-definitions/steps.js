@@ -1,23 +1,30 @@
-const { Given, When, Then } = require('@wdio/cucumber-framework');
-const { expect, $ } = require('@wdio/globals')
+const { defineStep } = require("@wdio/cucumber-framework");
+const RegisterPage = require("../pageobjects/RegisterPage");
+const AccountPage = require("../pageobjects/AccountPage");
 
-const LoginPage = require('../pageobjects/login.page');
-const SecurePage = require('../pageobjects/secure.page');
-
-const pages = {
-    login: LoginPage
-}
-
-Given(/^I am on the (\w+) page$/, async (page) => {
-    await pages[page].open()
+defineStep(/^I am on the registration page$/, async () => {
+    await RegisterPage.open();
 });
 
-When(/^I login with (\w+) and (.+)$/, async (username, password) => {
-    await LoginPage.login(username, password)
+defineStep(
+    /^I enter a valid email address, password, and my personal details$/,
+    async () => {
+        await RegisterPage.fillRegisterForm(
+            "John",
+            "Doe",
+            "jd3@email.com",
+            "Password123!"
+        );
+    }
+);
+
+defineStep(/^I click on the Create An Account button$/, async () => {
+    await RegisterPage.clickCreateAnAccountButton();
 });
 
-Then(/^I should see a flash message saying (.*)$/, async (message) => {
-    await expect(SecurePage.flashAlert).toBeExisting();
-    await expect(SecurePage.flashAlert).toHaveTextContaining(message);
+defineStep(/^I should be redirected to My Account page$/, async () => {
+    await expect(browser).toHaveUrl(
+        expect.stringContaining("customer/account")
+    );
+    await AccountPage.assertContactInformation("jd3@email.com");
 });
-
