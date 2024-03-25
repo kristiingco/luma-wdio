@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "types": ["node", "@wdio/globals/types", "@wdio/cucumber-framework"]
+    },
+    "include": [
+        "test/features/*.js",
+        "test/features/**/*.js",
+        "**/*.json",
+        "@wdio/globals/types",
+        "@wdio/cucumber-framework"
+    ]
+}
