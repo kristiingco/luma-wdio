@@ -20,6 +20,15 @@ class LoginPage extends AbstractPage {
     get forgotYourPasswordLink() {
         return $("a[class='action remind'] span");
     }
+
+    async fillLoginForm(email, password) {
+        await this.emailInput.setValue(email);
+        await this.passwordInput.setValue(password);
+    }
+
+    async clickSignInButton() {
+        await this.signInButton.click();
+    }
 }
 
 module.exports = new LoginPage();
