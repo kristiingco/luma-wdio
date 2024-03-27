@@ -21,6 +21,10 @@ class LoginPage extends AbstractPage {
         return $("a[class='action remind'] span");
     }
 
+    get loginErrorMessage() {
+        return $("div[role='alert']");
+    }
+
     async fillLoginForm(email, password) {
         await this.emailInput.setValue(email);
         await this.passwordInput.setValue(password);
@@ -28,6 +32,15 @@ class LoginPage extends AbstractPage {
 
     async clickSignInButton() {
         await this.signInButton.click();
+    }
+
+    async assertLoginErrorMessage() {
+        await this.loginErrorMessage.waitForDisplayed();
+        await expect(this.loginErrorMessage).toHaveText(
+            expect.stringContaining(
+                "The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later."
+            )
+        );
     }
 }
 
