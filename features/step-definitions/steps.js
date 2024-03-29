@@ -5,6 +5,10 @@ const LoginPage = require("../pageobjects/LoginPage");
 const Navbar = require("../pageobjects/components/Navbar");
 const HomePage = require("../pageobjects/HomePage");
 
+defineStep(/^I am on the homepage$/, async () => {
+    await HomePage.open();
+});
+
 defineStep(/^I am on the registration page$/, async () => {
     await RegisterPage.open();
 });
@@ -33,6 +37,10 @@ defineStep(/^I enter my valid email and password$/, async () => {
     await LoginPage.fillLoginForm("jd3@email.com", "Password123!");
 });
 
+defineStep(/^I select the (\w+) category$/, async (category) => {
+    await Navbar.clickCategory(category);
+});
+
 defineStep(
     /^I enter incorrect credentials such as incorrect email ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}) or password (.+)$/,
     async (email, password) => {
@@ -49,7 +57,7 @@ defineStep(/^I click on the Sign In button$/, async () => {
 });
 
 defineStep(/^I click the Sign Out button$/, async () => {
-    Navbar.clickLogoutButton();
+    await Navbar.clickLogoutButton();
 });
 
 defineStep(
@@ -70,4 +78,8 @@ defineStep(/^I should be logged out$/, async () => {
     await expect(await $(".base")).toHaveText(
         expect.stringContaining("signed out")
     );
+});
+
+defineStep(/^I should see a list of products$/, async () => {
+    await Navbar.assertProductsExist();
 });
